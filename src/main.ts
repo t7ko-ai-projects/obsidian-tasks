@@ -23,6 +23,7 @@ import { LinkResolver } from './Task/LinkResolver';
 import { ObsidianLocalStorageProvider } from './Config/ObsidianLocalStorageProvider';
 import { EnableJsInTasksQueries } from './Config/EnableJsInTasksQueries';
 import { startHorizonHistory } from './HorizonHistory/startHorizonHistory';
+import { registerDelayTaskCommand } from './Commands/DelayTaskCommand';
 import { registerNailCommands } from './Commands/NailCommands';
 import { editorDateMenuExtension } from './Obsidian/EditorDateMenuExtension';
 import { recurrenceDeleteOnCompletionExtension } from './Obsidian/RecurrenceDeleteOnCompletionExtension';
@@ -91,6 +92,7 @@ export default class TasksPlugin extends Plugin {
         this.registerEditorExtension(recurrenceDeleteOnCompletionExtension());
         // t7: split tasks
         registerSplitTaskCommand(this);
+        registerDelayTaskCommand(this);
         // t7: editor status menu
         this.registerEditorExtension(editorStatusMenuExtension());
         // t7: complete permanently

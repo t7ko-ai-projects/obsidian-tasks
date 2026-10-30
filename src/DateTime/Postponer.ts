@@ -14,12 +14,37 @@ export function shouldShowPostponeButton(task: Task) {
         }
     }
 
-    // require a valid date to postpone
+    // require a valid date to postpone, or no date at all: then the start date is added
     const dateFieldToPostpone = getDateFieldToPostpone(task);
     const hasAValidDateToPostpone = dateFieldToPostpone !== null && !!task[dateFieldToPostpone]?.isValid();
 
     // only postpone not done tasks
-    return !task.isDone && hasAValidDateToPostpone;
+    return !task.isDone && (hasAValidDateToPostpone || hasNoHappensDate(task));
+}
+
+/**
+ * t7 fork feature: delay a task without dates. Spec: `fork-features/delay-undated-tasks.md`.
+ *
+ * Whether the task has none of the start, scheduled and due dates. Postponing it adds a start date.
+ */
+export function hasNoHappensDate(task: Task) {
+    return !task.startDate && !task.scheduledDate && !task.dueDate;
+}
+
+/**
+ * The field to postpone, as {@link getDateFieldToPostpone}, but `startDate` for a task without any
+ * start, scheduled or due date (whatever the `postpone.dateField` setting). Null if the setting
+ * excludes all the dates the task has.
+ */
+export function getDateFieldToPostponeOrStart(task: Task): HappensDate | null {
+    return getDateFieldToPostpone(task) ?? (hasNoHappensDate(task) ? 'startDate' : null);
+}
+
+/**
+ * The date that postponing {@link field} counts from: its value or, with none, today.
+ */
+function dateToPostponeFrom(task: Task, field: HappensDate): moment.Moment {
+    return task[field] ?? window.moment().startOf('day');
 }
 
 /**
@@ -58,7 +83,7 @@ export function createPostponedTask(
     timeUnit: moment.unitOfTime.DurationConstructor,
     amount: number,
 ) {
-    const dateToPostpone = task[dateFieldToPostpone];
+    const dateToPostpone = dateToPostponeFrom(task, dateFieldToPostpone);
     return createPostponedTaskFromDate(dateToPostpone, task, dateFieldToPostpone, timeUnit, amount);
 }
 
@@ -146,8 +171,8 @@ export function postponeButtonTitle(task: Task, amount: number, timeUnit: moment
  * @see fixedDateMenuItemTitle
  */
 export function postponeMenuItemTitle(task: Task, amount: number, timeUnit: moment.unitOfTime.DurationConstructor) {
-    const updatedDateType = getDateFieldToPostpone(task)!;
-    const dateToUpdate = task[updatedDateType] as Moment;
+    const updatedDateType = getDateFieldToPostponeOrStart(task)!;
+    const dateToUpdate = dateToPostponeFrom(task, updatedDateType);
     return postponeMenuItemTitleFromDate(updatedDateType, dateToUpdate, amount, timeUnit);
 }
 
@@ -160,7 +185,7 @@ export function postponeMenuItemTitle(task: Task, amount: number, timeUnit: mome
  * @see postponeMenuItemTitle
  */
 export function fixedDateMenuItemTitle(task: Task, amount: number, timeUnit: moment.unitOfTime.DurationConstructor) {
-    const updatedDateType = getDateFieldToPostpone(task)!;
+    const updatedDateType = getDateFieldToPostponeOrStart(task)!;
     const dateToUpdate = window.moment().startOf('day');
     return postponeMenuItemTitleFromDate(updatedDateType, dateToUpdate, amount, timeUnit);
 }
@@ -174,7 +199,7 @@ export function fixedDateMenuItemTitle(task: Task, amount: number, timeUnit: mom
  * @see postponeMenuItemTitle
  */
 export function removeDateMenuItemTitle(task: Task, _amount: number, _timeUnit: moment.unitOfTime.DurationConstructor) {
-    const updatedDateType = getDateFieldToPostpone(task)!;
+    const updatedDateType = getDateFieldToPostponeOrStart(task)!;
     return removeDateMenuItemTitleForField(updatedDateType, task);
 }
 

@@ -7,6 +7,7 @@ import {
     createTaskWithDateRemoved,
     fixedDateMenuItemTitle,
     getDateFieldToPostpone,
+    getDateFieldToPostponeOrStart,
     postponeButtonTitle,
     postponeMenuItemTitle,
     postponementSuccessMessage,
@@ -112,22 +113,39 @@ describe('postpone - whether to show button', () => {
         checkPostponeButtonVisibility(StatusType.DONE, false);
     });
 
-    it('should not show button for a task with no dates', () => {
+    // t7 fork feature: delay-undated-tasks
+    it('should show button for a task with no dates', () => {
         const task = new TaskBuilder().build();
 
-        expect(shouldShowPostponeButton(task)).toEqual(false);
+        expect(shouldShowPostponeButton(task)).toEqual(true);
     });
 
-    it('should not show button for a task with a created date only', () => {
+    it('should show button for a task with a created date only', () => {
         const task = new TaskBuilder().createdDate('2023-11-29').build();
 
+        expect(shouldShowPostponeButton(task)).toEqual(true);
+    });
+
+    it('should not show button for a done task with no dates', () => {
+        const task = new TaskBuilder().status(Status.DONE).build();
+
         expect(shouldShowPostponeButton(task)).toEqual(false);
     });
 
-    it('should not show button for a task with a done date only', () => {
+    it('should add a start date of tomorrow to a task with no dates', () => {
+        const task = new TaskBuilder().build();
+
+        expect(getDateFieldToPostponeOrStart(task)).toEqual('startDate');
+        const { postponedTask } = createPostponedTask(task, 'startDate', 'day', 1);
+        expect(postponedTask.startDate?.format('YYYY-MM-DD')).toEqual(
+            window.moment().startOf('day').add(1, 'day').format('YYYY-MM-DD'),
+        );
+    });
+
+    it('should show button for a not done task with a done date only', () => {
         const task = new TaskBuilder().doneDate('2023-11-30').build();
 
-        expect(shouldShowPostponeButton(task)).toEqual(false);
+        expect(shouldShowPostponeButton(task)).toEqual(true);
     });
 
     it('should show button for a task with a start date only', () => {
@@ -367,7 +385,7 @@ describe('postpone - postpone.dateField setting options', () => {
             expect(shouldShowPostponeButton(taskDueAndStart)).toEqual(false);
 
             expect(getDateFieldToPostpone(undatedTask)).toBeNull();
-            expect(shouldShowPostponeButton(undatedTask)).toEqual(false);
+            expect(shouldShowPostponeButton(undatedTask)).toEqual(true);
         });
     });
 
