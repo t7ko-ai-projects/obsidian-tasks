@@ -180,6 +180,18 @@ export function toggleStep(description: string, wasDone: boolean, willBeDone: bo
 }
 
 /**
+ * The description with every open step struck through, or null if fewer than two steps are open (then a toggle
+ * does the same). The caller completes the task.
+ */
+export function completeAllSteps(description: string): string | null {
+    const openSteps = findSteps(description).filter((step) => !step.done);
+    if (openSteps.length < 2) {
+        return null;
+    }
+    return openSteps.reverse().reduce((result, step) => strike(result, step), description);
+}
+
+/**
  * The description with every step reopened, for a new occurrence of a recurring task.
  */
 export function resetSteps(description: string): string {

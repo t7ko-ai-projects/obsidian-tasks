@@ -2,6 +2,7 @@ import type { StatusRegistry } from '../../Statuses/StatusRegistry';
 import type { Task } from '../../Task/Task';
 import { allStatusInstructions } from '../EditInstructions/StatusInstructions';
 import { completePermanentlyInstructionsAfterSeparator } from '../EditInstructions/CompletePermanentlyInstruction';
+import { completeAllStepsInstructionsAfterSeparator } from '../EditInstructions/CompleteAllStepsInstruction';
 import { TaskEditingMenu, type TaskSaver, defaultTaskSaver } from './TaskEditingMenu';
 
 /**
@@ -27,5 +28,7 @@ export class StatusMenu extends TaskEditingMenu {
         this.addItemsForInstructions(instructions, task);
         // t7: complete permanently (fork-features/complete-permanently.md)
         this.addItemsForInstructions(completePermanentlyInstructionsAfterSeparator(task), task);
+        // t7: complete all steps of a multi-step task (fork-features/multi-step-tasks.md)
+        this.addItemsForInstructions(completeAllStepsInstructionsAfterSeparator(task), task);
     }
 }

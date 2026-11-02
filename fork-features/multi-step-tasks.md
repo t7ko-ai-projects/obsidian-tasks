@@ -19,6 +19,7 @@ Write the steps after the marker 🪜, separated by `//` with a space on each si
 - Un-checking a task whose steps are all done (as finishing the last step leaves it) reopens the last step. To go back further, remove the `~~` by hand.
 - A recurring multi-step task is completed as usual when its last step is done, and the new occurrence starts again at step 1.
 - Choosing a status (status menu, "Change status to" commands, the edit modal) sets the whole task's status, as upstream: choosing Done completes the task with its steps as they are. A new occurrence still starts at step 1.
+- The context menu of the checkbox (query results, Reading mode, Live Preview and Source mode) ends with `Complete all steps` for an open task with two or more open steps. It strikes every open step through and completes the task as a click on the last step would: done date, next occurrence of a recurring task (starting at step 1), On Completion. With one open step it is not offered: a click does the same.
 - The edit modal shows the steps as part of the description, where they can be edited as text.
 - The edit modal has an **Actions** section between Priority and the dates, for buttons that change the description. Its button `Insert 🪜` puts the marker into the description at the cursor and leaves the cursor after it, ready for the first step. It is greyed out while the description has a marker. With access keys on, the button reads `Insert 🪜 (p)` and Alt+P presses it.
 
@@ -46,7 +47,8 @@ There is no setting. Tasks without the marker behave exactly as upstream.
     - is one step in the field's undo history (Ctrl+Z);
     - is disabled, with a tooltip saying the description already has the marker, whenever the description contains it, as typed or inserted;
     - has the access key P, shown as an underlined `(p)` after its text, when the Tasks setting for access keys is on.
-10. Parsing and writing task lines don't change: to every serializer the steps are description text, so vanilla Tasks reads the same fields from the same lines.
+10. The status menu ends with a separator and `Complete all steps` when the task's status type is TODO, IN_PROGRESS or ON_HOLD and it has two or more open steps. Choosing it strikes all open steps through (as in requirement 4) and sets the status a toggle would give if that is a DONE status, else `x` Done, like any status change from the menu (requirements 3 and 7: no step logic of its own beyond striking).
+11. Parsing and writing task lines don't change: to every serializer the steps are description text, so vanilla Tasks reads the same fields from the same lines.
 
 Accepted consequences:
 
@@ -61,6 +63,7 @@ Accepted consequences:
 - **Description text, not a new task field.** No serializer, layout, renderer or modal change is needed (a real field touches about 13 files), and vanilla Tasks treats unknown text right after the description as description anyway. Rejected: a serialized field.
 - **Strikethrough marks done steps.** It is plain Markdown, so progress shows wherever the description is rendered, vanilla Tasks included, and it can be edited by hand. Rejected: removing done steps (a recurring task needs them again), and a counter such as `2/3` (has to be kept in sync with the steps and says nothing per step).
 - **Marker 🪜 and separator `//`, chosen by the user.** An explicit marker keeps ordinary descriptions containing `//` from being taken for steps. Whitespace is required around `//` so URLs and `a//b` don't split. Rejected: `>` (proposed first) and `;` as separators, 👣 as the marker.
+- **`Complete all steps` is a menu entry, not a changed Done choice:** choosing a status still sets the whole task's status with the steps as they are; the user asked for a separate entry that strikes the steps too, so the done task reads as fully finished. Offered only with two or more open steps, since with one it equals a click.
 - **Only toggling advances a step; choosing a status sets the whole task's status**, chosen by the user. The checkbox and the toggle command mean "I did the next thing", while the status menu, status commands and edit modal stay a way to complete or cancel the whole task at once. Rejected: advancing a step on every way of marking a task done.
 - **The status is kept while steps remain**, In Progress included: the task as a whole is still under way. Rejected: resetting it to the start of the status cycle.
 - **Un-checking reopens the last step only when every step is done**: that is the state finishing the last step leaves, so un-checking undoes exactly that click. When steps are open (the task was completed through a status or in vanilla Tasks), un-checking leaves them as they are.
