@@ -86,7 +86,7 @@ It brightens while the pointer is over the task, and a left or right click on it
 
 ### Auto-suggest
 
-In the Tasks emoji format, typing `hor` (or more of `horizon`) offers `🔭 horizon`, which inserts the 🔭 and a space. Right after them, the popup offers the six values, filtered by what has been typed.
+In the Tasks emoji format, typing `hor` (or more of `horizon`) offers `🔭 horizon`, which inserts the 🔭 and a space. Right after them, the popup offers the six values, filtered by what has been typed. A value matches if it starts with the typed text or one of its words does: `wee` offers `this week` and `next week`, `mon` offers `this month` and `next month` (added 2026-11-06; the user typed `wee` and got Tasks' generic list).
 
 `🔭 horizon` is offered only while the line has no 🔭 yet.
 

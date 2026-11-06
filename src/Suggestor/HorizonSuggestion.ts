@@ -6,7 +6,8 @@ import type { SuggestInfo } from '.';
 /**
  * t7 fork feature: horizon. Spec: `fork-features/horizon.md`.
  *
- * Right after the horizon marker, offers the horizons that start with what has been typed after it.
+ * Right after the horizon marker, offers the horizons that start with what has been typed after it, or have a
+ * word that does (`wee` offers `this week` and `next week`).
  * Elsewhere, when the word before the cursor is the start of `horizon` (at least `hor`) and the line has no
  * marker yet, offers the marker itself, `🔭 horizon`. After the Tasks fields (⏫, 📅 2026-10-20 ...) a horizon
  * would hide them from Tasks, so there it offers the horizons themselves, `🔭 today` and so on, which go
@@ -36,7 +37,7 @@ function valueSuggestions(beforeCursor: string): SuggestInfo[] | null {
     }
     const typed = match[2].toLowerCase().replace(/\s+/, ' ');
     return horizons
-        .filter((horizon) => horizon.startsWith(typed))
+        .filter((horizon) => matchesTyped(horizon, typed))
         .map((horizon) => ({
             suggestionType: 'match',
             displayText: horizon,
@@ -44,6 +45,14 @@ function valueSuggestions(beforeCursor: string): SuggestInfo[] | null {
             insertAt: match.index,
             insertSkip: match[0].length,
         }));
+}
+
+/**
+ * Whether {@link horizon} starts with {@link typed}, or one of its words does: `wee` finds `this week` and
+ * `next week`, `mon` finds `this month` and `next month`.
+ */
+function matchesTyped(horizon: string, typed: string): boolean {
+    return horizon.startsWith(typed) || (typed !== '' && horizon.split(' ').some((word) => word.startsWith(typed)));
 }
 
 function markerSuggestions(line: string, cursorPos: number): SuggestInfo[] {
