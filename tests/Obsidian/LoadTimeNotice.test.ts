@@ -17,8 +17,12 @@ describe('load time notice', () => {
     });
 
     it('says the times in seconds and the task count', () => {
-        expect(loadTimeMessage(9500, 2426, 1200)).toEqual(
-            'Tasks ready 8.3 s after loading (9.5 s after the app page started), 2426 tasks.',
+        expect(loadTimeMessage(9500, 2426, { workspaceReady: 3100, metadataResolved: 5000 }, 1200)).toEqual(
+            'Tasks ready 8.3 s after loading (9.5 s after the app page started), 2426 tasks. ' +
+                'After the page started: workspace ready 3.1 s, metadata resolved 5.0 s.',
+        );
+        expect(loadTimeMessage(9500, 1, undefined, 1200)).toContain(
+            'workspace ready not yet, metadata resolved not yet',
         );
     });
 });
