@@ -23,6 +23,7 @@ import { LinkResolver } from './Task/LinkResolver';
 import { ObsidianLocalStorageProvider } from './Config/ObsidianLocalStorageProvider';
 import { EnableJsInTasksQueries } from './Config/EnableJsInTasksQueries';
 import { startHorizonHistory } from './HorizonHistory/startHorizonHistory';
+import { startLoadTimeNotice } from './Obsidian/LoadTimeNotice';
 import { registerDelayTaskCommand } from './Commands/DelayTaskCommand';
 import { registerNailCommands } from './Commands/NailCommands';
 import { editorDateMenuExtension } from './Obsidian/EditorDateMenuExtension';
@@ -82,6 +83,8 @@ export default class TasksPlugin extends Plugin {
             events,
         });
 
+        // t7: load time notice
+        startLoadTimeNotice(this, events);
         // t7: horizon history
         startHorizonHistory(this, events);
         // t7: nails

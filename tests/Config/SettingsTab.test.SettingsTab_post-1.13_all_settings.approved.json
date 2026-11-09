@@ -400,5 +400,16 @@
       }
     ],
     "type": "group"
+  },
+  {
+    "heading": "Diagnostics",
+    "items": [
+      {
+        "name": "Show load time",
+        "desc": "Show a notice when Tasks is ready after Obsidian starts: how long it took, and how many tasks it found. For finding out why dashboards load slowly.",
+        "render": "[Function]"
+      }
+    ],
+    "type": "group"
   }
 ]

@@ -22,6 +22,7 @@ import { createStatusRegistryReport } from '../Statuses/StatusRegistryReport';
 import { i18n } from '../i18n/i18n';
 import type { TasksEvents } from '../Obsidian/TasksEvents';
 import { horizonHistorySettingsGroup } from '../HorizonHistory/HorizonHistorySettingsGroup';
+import { loadTimeNoticeSettingsGroup } from './LoadTimeNoticeSetting';
 import { recurrenceDeleteOnCompletionSettingItem } from './RecurrenceDeleteOnCompletionSetting';
 import * as Themes from './Themes';
 import {
@@ -215,6 +216,7 @@ export class SettingsTab extends PluginSettingTab {
             this.recurringTasksGroup(),
             this.taskEntryGroup(),
             horizonHistorySettingsGroup(this.plugin, this.events, () => this.refreshDomState()), // t7: horizon history
+            loadTimeNoticeSettingsGroup(this.plugin), // t7: load time notice
         ];
     }
 
