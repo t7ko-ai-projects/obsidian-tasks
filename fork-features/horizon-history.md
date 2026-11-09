@@ -222,7 +222,8 @@ At the end of the plugin's settings, the group **Horizons** has:
 
 | Setting | Default | Meaning |
 | --- | --- | --- |
-| Horizon placeholder | On | The faint 🔭 at the end of each task without a horizon (see [horizon](horizon.md#menu)). Off: no placeholder, so a horizon is added by typing it; horizons and their badges still show |
+| Horizon placeholder | On; off on phones and tablets | The faint 🔭 at the end of each task without a horizon (see [horizon](horizon.md#menu)). Off: no placeholder, so a horizon is added by typing it; horizons and their badges still show |
+| Horizon history | On; off on phones and tablets | Whether the history runs at all: no tracking, no `.tasks-history` files, no badges, and the planned, opened and lateness queries find nothing. Read when the plugin loads, so a change needs a restart (added 2026-11-09, for running the fork on a phone) |
 | Badges show | Lateness | Or `Age` (see [Age badges](#age-badges)) |
 | Tasks to track | Tasks with a horizon | Or `All open tasks`. Only shown with `Lateness`: `Age` tracks all open tasks |
 | Yellow badge from | 7 | Days late from which a late task shows a badge, yellow. Only shown with `Lateness` |

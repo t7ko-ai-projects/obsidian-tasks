@@ -32,6 +32,7 @@ export function normaliseHorizonHistorySettings(value: unknown): HorizonHistoryS
     const badges = given.badges === 'age' || given.badges === 'lateness' ? given.badges : defaults.badges;
     const ageBadgeFrom = isDayCount(given.ageBadgeFrom) ? given.ageBadgeFrom : defaults.ageBadgeFrom;
     return {
+        enabled: typeof given.enabled === 'boolean' ? given.enabled : defaults.enabled,
         track,
         lateDays: normaliseDayLevels(given.lateDays, defaults.lateDays),
         badges,

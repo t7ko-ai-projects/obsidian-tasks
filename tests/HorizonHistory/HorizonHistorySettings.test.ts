@@ -12,9 +12,27 @@ afterEach(() => {
     resetSettings();
 });
 
-const ageDefaults = { badges: 'lateness', ageBadgeFrom: 14, ageDays: { low: 30, medium: 90, high: 365 } };
+const ageDefaults = {
+    enabled: true,
+    badges: 'lateness',
+    ageBadgeFrom: 14,
+    ageDays: { low: 30, medium: 90, high: 365 },
+};
 
 describe('horizon history settings', () => {
+    it('is off by default on mobile, with the placeholder', async () => {
+        const { Platform } = await import('obsidian');
+        const { defaultForkSettings } = await import('../../src/Config/ForkSettings');
+        Platform.isMobile = true;
+        try {
+            expect(defaultForkSettings().horizonHistory.enabled).toEqual(false);
+            expect(defaultForkSettings().horizon.placeholder).toEqual(false);
+            expect(normaliseHorizonHistorySettings({ enabled: true }).enabled).toEqual(true);
+        } finally {
+            Platform.isMobile = false;
+        }
+    });
+
     it('has relaxed defaults', () => {
         expect(horizonHistorySettings()).toEqual({
             track: 'horizon',
@@ -103,6 +121,7 @@ describe('horizon history settings group', () => {
     it('shows the lateness settings with lateness badges', () => {
         expect(shownSettings()).toEqual([
             'Horizon placeholder',
+            'Horizon history',
             'Badges show',
             'Tasks to track',
             'Yellow badge from',
@@ -115,6 +134,7 @@ describe('horizon history settings group', () => {
         updateSettings({ t7: { horizonHistory: { ...horizonHistorySettings(), badges: 'age' } } });
         expect(shownSettings()).toEqual([
             'Horizon placeholder',
+            'Horizon history',
             'Badges show',
             'Age badge from',
             'Yellow age from',

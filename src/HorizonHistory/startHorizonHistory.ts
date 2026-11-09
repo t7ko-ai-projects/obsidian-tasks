@@ -17,6 +17,11 @@ import { redrawHorizonHistory } from './redrawHorizonHistory';
  * seconds after a change and when the plugin unloads. Call once from the plugin's `onload()`, after the cache exists.
  */
 export function startHorizonHistory(plugin: Plugin, events: TasksEvents): void {
+    // Off by default on phones and tablets: no tracking, no files, no badges.
+    if (!horizonHistorySettings().enabled) {
+        return;
+    }
+
     const logger = logging.getLogger('tasks.HorizonHistory');
     const history = HorizonHistory.getInstance();
     const fileSystem = plugin.app.vault.adapter;

@@ -32,6 +32,8 @@ export function createTFile(path: string): TFile {
     };
 }
 
+export const Platform = { isMobile: false };
+
 export class MenuItem {
     public title: string | DocumentFragment = '';
     public callback: (evt: MouseEvent | KeyboardEvent) => any;

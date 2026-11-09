@@ -1,3 +1,5 @@
+import { Platform } from 'obsidian';
+
 /**
  * Settings of the t7 fork's features, kept in one object, `t7`, in the plugin's settings.
  *
@@ -16,6 +18,8 @@ export interface ForkSettings {
  * Horizon history. Spec: `fork-features/horizon-history.md`.
  */
 export interface HorizonHistorySettings {
+    /** Whether the history runs: off by default on phones and tablets, read when the plugin loads */
+    enabled: boolean;
     /** Which tasks the history follows: those with a horizon, or every open task */
     track: 'horizon' | 'open';
     /** Days late from which a late task's badge shows at each level */
@@ -47,6 +51,7 @@ export interface RecurrenceSettings {
 export function defaultForkSettings(): Required<ForkSettings> {
     return {
         horizonHistory: {
+            enabled: !Platform.isMobile,
             track: 'horizon',
             lateDays: { low: 7, medium: 30, high: 90 },
             badges: 'lateness',
@@ -54,7 +59,7 @@ export function defaultForkSettings(): Required<ForkSettings> {
             ageDays: { low: 30, medium: 90, high: 365 },
         },
         horizon: {
-            placeholder: true,
+            placeholder: !Platform.isMobile,
         },
         recurrence: {
             deleteOnCompletion: false,

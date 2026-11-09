@@ -91,6 +91,17 @@ export function horizonHistorySettingsGroup(
                 },
             },
             {
+                name: 'Horizon history',
+                desc: 'Track tasks in .tasks-history files, for lateness and age badges and the planned, opened and lateness queries. Off by default on phones and tablets. Takes effect when Obsidian restarts.',
+                render: (setting: Setting) => {
+                    setting.addToggle((toggle) => {
+                        toggle.setValue(horizonHistorySettings().enabled).onChange(async (value) => {
+                            await saveHorizonHistorySettings(plugin, { enabled: value });
+                        });
+                    });
+                },
+            },
+            {
                 name: 'Badges show',
                 desc: "Lateness: late tasks with a horizon get a badge saying how late they are. Age: every open task gets a badge saying how old it is, with or without a horizon, and all open tasks are tracked. For a vault that doesn't use horizons.",
                 render: (setting: Setting) => {
