@@ -23,7 +23,7 @@ import { LinkResolver } from './Task/LinkResolver';
 import { ObsidianLocalStorageProvider } from './Config/ObsidianLocalStorageProvider';
 import { EnableJsInTasksQueries } from './Config/EnableJsInTasksQueries';
 import { startHorizonHistory } from './HorizonHistory/startHorizonHistory';
-import { startLoadTimeNotice } from './Obsidian/LoadTimeNotice';
+import { markStartup, startLoadTimeNotice } from './Obsidian/LoadTimeNotice';
 import { registerDelayTaskCommand } from './Commands/DelayTaskCommand';
 import { registerNailCommands } from './Commands/NailCommands';
 import { editorDateMenuExtension } from './Obsidian/EditorDateMenuExtension';
@@ -43,12 +43,14 @@ export default class TasksPlugin extends Plugin {
     }
 
     async onload() {
+        markStartup('onloadStart'); // t7: load time notice
         await initializeI18n();
 
         logging.registerConsoleLogger();
         log('info', i18n.t('main.loadingPlugin', { name: this.manifest.name, version: this.manifest.version }));
 
         await this.loadSettings();
+        markStartup('settingsRead'); // t7: load time notice
 
         EnableJsInTasksQueries.initialise(new ObsidianLocalStorageProvider(this.app));
 
@@ -112,6 +114,7 @@ export default class TasksPlugin extends Plugin {
         this.registerEditorExtension(newLivePreviewExtension(this));
         this.registerEditorSuggest(new EditorSuggestor(this.app, getSettings(), this));
         new Commands({ plugin: this });
+        markStartup('onloadEnd'); // t7: load time notice
     }
 
     async loadTaskStatuses() {
