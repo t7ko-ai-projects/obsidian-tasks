@@ -20,6 +20,7 @@ A quick manual check after rebasing the fork onto a new upstream release, once t
 16. **Jump anchor** ([spec](jump-anchor.md)). On a new line type `- [ ] smoke ^jump-anchor`, then click at the top of the note. Press Ctrl+J: the cursor is at the end of the smoke line. Click at the top again and press Ctrl+Shift+J: a new line with an empty checkbox `- [ ]` is right under the smoke line, with the cursor on it. Delete both lines and press Ctrl+J: a notice says `No ^jump-anchor in this note`.
 17. **Delay without dates** ([spec](delay-undated-tasks.md)). On a new line type `- [ ] smoke delay`. Right-click the line in the editor and choose `Delay task`: the line ends with `🛫 <tomorrow>`. Delete the start date, and below the line add a `tasks` block with `description includes smoke delay`: the task has a delay button; click it: the start date is tomorrow's. Delete the line and the block.
 18. **Load time** ([spec](load-time-notice.md)). Restart Obsidian, then open the Tasks settings: under Diagnostics, **Load time** reads `Tasks ready ... s after loading (... s after the app page started), ... tasks.` and no popup appeared.
+19. **Jump to** ([spec](jump-to-task.md)). In a note with `- [ ] smoke jump` and below it a `tasks` block with `description includes smoke jump`, right-click the task's text in the results (in Reading mode too): the menu starts with `Jump to`; choose it: the note opens with the cursor on the smoke line. Delete the line and the block.
 
 If a step fails, go back to the last good build before investigating.
 

@@ -2,6 +2,7 @@ import type { Task } from '../../Task/Task';
 import { nailInstructions, nailInstructionsAfterSeparator } from '../EditInstructions/NailInstructions';
 import { splitTaskInstructionsAfterSeparator } from '../EditInstructions/SplitTaskInstruction';
 import { completePermanentlyInstructionsAfterSeparator } from '../EditInstructions/CompletePermanentlyInstruction';
+import { jumpToTask, jumpToTaskAvailable } from '../../Obsidian/JumpToTask';
 import { PriorityMenu } from './PriorityMenu';
 import { TaskEditingMenu, type TaskSaver, defaultTaskSaver } from './TaskEditingMenu';
 
@@ -10,7 +11,9 @@ import { TaskEditingMenu, type TaskSaver, defaultTaskSaver } from './TaskEditing
  *
  * It is the menu of a right-click on a rendered task's text, so it also ends with `Split task` when the task can be
  * split (t7 fork feature: split tasks, spec: `fork-features/split-tasks.md`), and with `Complete permanently` when
- * it recurs (t7 fork feature: complete permanently, spec: `fork-features/complete-permanently.md`).
+ * it recurs (t7 fork feature: complete permanently, spec: `fork-features/complete-permanently.md`). It starts with
+ * `Jump to`, which opens the task's note at its line (t7 fork feature: jump to task, spec:
+ * `fork-features/jump-to-task.md`).
  */
 export class NailMenu extends TaskEditingMenu {
     /**
@@ -21,6 +24,10 @@ export class NailMenu extends TaskEditingMenu {
     constructor(task: Task, taskSaver: TaskSaver = defaultTaskSaver) {
         super(taskSaver);
 
+        if (jumpToTaskAvailable()) {
+            this.addItem((item) => item.setTitle('Jump to').onClick(() => jumpToTask(task)));
+            this.addSeparator();
+        }
         this.addItemsForInstructions(nailInstructions(task), task);
         this.addItemsForInstructions(splitTaskInstructionsAfterSeparator(task), task);
         this.addItemsForInstructions(completePermanentlyInstructionsAfterSeparator(task), task);
