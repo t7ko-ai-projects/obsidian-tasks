@@ -216,7 +216,7 @@ export class SettingsTab extends PluginSettingTab {
             this.recurringTasksGroup(),
             this.taskEntryGroup(),
             horizonHistorySettingsGroup(this.plugin, this.events, () => this.refreshDomState()), // t7: horizon history
-            loadTimeNoticeSettingsGroup(this.plugin), // t7: load time notice
+            loadTimeNoticeSettingsGroup(), // t7: load time notice
         ];
     }
 

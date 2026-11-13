@@ -12,8 +12,6 @@ export interface ForkSettings {
     horizon?: HorizonSettings;
     /** Missing in settings saved before it was added */
     recurrence?: RecurrenceSettings;
-    /** Missing in settings saved before it was added */
-    diagnostics?: DiagnosticsSettings;
 }
 
 /**
@@ -50,14 +48,6 @@ export interface RecurrenceSettings {
     deleteOnCompletion: boolean;
 }
 
-/**
- * Diagnostics. Spec: `fork-features/load-time-notice.md`.
- */
-export interface DiagnosticsSettings {
-    /** Whether a notice shows how long Tasks took to be ready after Obsidian started */
-    loadTimeNotice: boolean;
-}
-
 export function defaultForkSettings(): Required<ForkSettings> {
     return {
         horizonHistory: {
@@ -73,9 +63,6 @@ export function defaultForkSettings(): Required<ForkSettings> {
         },
         recurrence: {
             deleteOnCompletion: false,
-        },
-        diagnostics: {
-            loadTimeNotice: false,
         },
     };
 }

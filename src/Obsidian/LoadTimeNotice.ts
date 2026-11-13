@@ -1,12 +1,11 @@
-import { Notice, type Plugin } from 'obsidian';
-import { loadTimeNoticeShown } from '../Config/LoadTimeNoticeSetting';
+import type { Plugin } from 'obsidian';
 import { State } from './Cache';
 import type { TasksEvents } from './TasksEvents';
 
 /**
  * t7 fork feature: load time notice. Spec: `fork-features/load-time-notice.md`.
  *
- * When the setting is on, shows a notice the first time Tasks' cache is warm after the plugin loaded: the time since
+ * Records, the first time Tasks' cache is warm after the plugin loaded, a line for the settings tab (Diagnostics): the time since
  * the plugin's code was evaluated, the time since the app's page started, the number of tasks, and when the workspace
  * was ready and Obsidian's metadata cache first resolved, the two events that start Tasks' scan, so waiting can be
  * told from scanning, and when Tasks' own startup began, read its settings and finished. Call once from the plugin's `onload()`, after the cache exists.
@@ -28,6 +27,15 @@ export function markStartup(step: keyof typeof startupMarks): void {
     startupMarks[step] ??= performance.now();
 }
 
+let lastLoadTime: string | null = null;
+
+/**
+ * The line recorded at the last start of Obsidian, or null before Tasks was ready.
+ */
+export function lastLoadTimeMessage(): string | null {
+    return lastLoadTime;
+}
+
 export function startLoadTimeNotice(plugin: Plugin, events: TasksEvents): void {
     let shown = false;
     const seen: SeenTimes = { ...startupMarks, workspaceReady: null, metadataResolved: null };
@@ -45,9 +53,7 @@ export function startLoadTimeNotice(plugin: Plugin, events: TasksEvents): void {
                 return;
             }
             shown = true;
-            if (loadTimeNoticeShown()) {
-                new Notice(loadTimeMessage(performance.now(), tasks.length, { ...seen, ...startupMarks }), 20000);
-            }
+            lastLoadTime = loadTimeMessage(performance.now(), tasks.length, { ...seen, ...startupMarks });
         }),
     );
 }

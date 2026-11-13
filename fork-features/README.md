@@ -22,4 +22,4 @@ After a rebase, run the [smoke test](smoke-test.md): one quick manual step per f
 | [Complete permanently](complete-permanently.md) | `Complete permanently` in the context menus marks a recurring task done without a next occurrence, keeping the done line even with `🏁 delete` |
 | [Jump anchor](jump-anchor.md) | Ctrl+J puts the cursor at the note's `^jump-anchor` line; Ctrl+Shift+J starts a new entry right under it |
 | [Delay a task without dates](delay-undated-tasks.md) | The delay button, and a `Delay task` editor menu item and command, work on a task with no dates by adding a start date of tomorrow |
-| [Load time notice](load-time-notice.md) | An optional notice of how long Tasks took to be ready after Obsidian started, for finding out why query blocks load slowly on a phone |
+| [Load time](load-time-notice.md) | A line in the Tasks settings (Diagnostics) with how long Tasks took to be ready at the last start of Obsidian, for finding out why query blocks load slowly on a phone |

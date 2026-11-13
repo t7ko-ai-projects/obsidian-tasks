@@ -405,8 +405,8 @@
     "heading": "Diagnostics",
     "items": [
       {
-        "name": "Show load time",
-        "desc": "Show a notice when Tasks is ready after Obsidian starts: how long it took, and how many tasks it found. For finding out why dashboards load slowly.",
+        "name": "Load time",
+        "desc": "How long Tasks took to be ready at the last start of Obsidian. For finding out why dashboards load slowly.",
         "render": "[Function]"
       }
     ],
