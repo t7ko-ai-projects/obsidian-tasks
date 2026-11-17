@@ -3,6 +3,7 @@ import type { Task } from '../../Task/Task';
 import { replaceTaskWithTasks } from '../../Obsidian/File';
 import type { TaskEditingInstruction } from '../EditInstructions/TaskEditingInstruction';
 import { SEPARATOR_INSTRUCTION_DISPLAY_NAME } from '../EditInstructions/MenuDividerInstruction';
+import { setInstructionIcon } from './MenuItemIcons';
 
 /**
  * A function for replacing one task with zero or more new tasks.
@@ -79,5 +80,7 @@ export class TaskEditingMenu extends Menu {
                     await this.taskSaver(task, newTask);
                 }
             });
+        // t7: icons for the fork's menu items
+        setInstructionIcon(item, instruction);
     }
 }

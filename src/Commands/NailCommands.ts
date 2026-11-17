@@ -1,5 +1,6 @@
 import type { Editor, Menu, Plugin } from 'obsidian';
 import { type LineEdit, addNailEdit, removeNailEdit } from '../Task/Nails';
+import { NAIL_ICON } from '../ui/EditInstructions/NailInstructions';
 
 /**
  * t7 fork feature: nails. Spec: `fork-features/nails.md`.
@@ -40,9 +41,6 @@ const nailActions: NailAction[] = [
     { id: 'add-nail', name: 'Add nail', edit: addNailEdit },
     { id: 'remove-nail', name: 'Remove nail', edit: removeNailEdit },
 ];
-
-// Lucide's warning triangle, which Obsidian has, for the ⚠️ of a nail.
-const NAIL_ICON = 'triangle-alert';
 
 /**
  * Add `Add nail` and, if the task has nails, `Remove nail` to an editor's context menu, when the cursor is on a

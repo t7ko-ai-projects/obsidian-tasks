@@ -85,6 +85,8 @@ li.plugin-tasks-list-item[data-task-nails]:not([data-task-nails='1'], [data-task
 }
 ```
 
+- `Add nail` and `Remove nail` have the warning-triangle icon (Lucide `triangle-alert`, the shape of ⚠️) in every menu: the editor's, the rendered task's and the end of the priority menu.
+
 ## Requirements
 
 1. The number of nails is the number of ⚠ (U+26A0) in the run at the start of the description made of ⚠, each optionally followed by U+FE0F, with any whitespace between and after them. Nothing else counts.

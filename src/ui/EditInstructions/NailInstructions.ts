@@ -3,6 +3,9 @@ import { addNail, nailCount, removeNail } from '../../Task/Nails';
 import { MenuDividerInstruction } from './MenuDividerInstruction';
 import type { TaskEditingInstruction } from './TaskEditingInstruction';
 
+// Lucide's warning triangle, which Obsidian has, for the ⚠️ of a nail.
+export const NAIL_ICON = 'triangle-alert';
+
 /**
  * t7 fork feature: an instruction for adding a nail to a {@link Task}. Spec: `fork-features/nails.md`.
  */
@@ -17,6 +20,10 @@ export class AddNail implements TaskEditingInstruction {
 
     public isCheckedForTask(_task: Task): boolean {
         return false;
+    }
+
+    public instructionIcon(): string {
+        return NAIL_ICON;
     }
 }
 
@@ -38,6 +45,10 @@ export class RemoveNail implements TaskEditingInstruction {
 
     public isCheckedForTask(_task: Task): boolean {
         return false;
+    }
+
+    public instructionIcon(): string {
+        return NAIL_ICON;
     }
 }
 

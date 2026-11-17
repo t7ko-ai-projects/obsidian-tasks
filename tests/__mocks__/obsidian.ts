@@ -38,6 +38,7 @@ export class MenuItem {
     public title: string | DocumentFragment = '';
     public callback: (evt: MouseEvent | KeyboardEvent) => any;
     public checked = false;
+    public icon = '';
 
     constructor() {
         this.callback = (_evt: MouseEvent | KeyboardEvent) => console.log('callback not defined');
@@ -54,6 +55,12 @@ export class MenuItem {
     }
     public setChecked(checked: boolean | null): this {
         this.checked = checked ? checked : false;
+        return this;
+    }
+
+    // t7: icons for the fork's menu items
+    public setIcon(icon: string | null): this {
+        this.icon = icon ?? '';
         return this;
     }
 }
@@ -287,6 +294,9 @@ export function prepareFuzzySearch(query: string) {
 }
 
 type IconName = string;
+
+// t7: icons for the fork's menu items
+export function addIcon(_iconId: string, _svgContent: string): void {}
 
 export function setIcon(element: HTMLElement, iconId: IconName): void {
     element.setAttribute('test-icon', iconId);
