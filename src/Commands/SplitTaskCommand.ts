@@ -3,6 +3,7 @@ import { TasksFile } from '../Scripting/TasksFile';
 import { splitTask } from '../Task/SplitTask';
 import { Task } from '../Task/Task';
 import { TaskLocation } from '../Task/TaskLocation';
+import { SPLIT_ICON } from '../ui/EditInstructions/SplitTaskInstruction';
 
 /**
  * t7 fork feature: split tasks. Spec: `fork-features/split-tasks.md`.
@@ -32,9 +33,6 @@ export function registerSplitTaskCommand(plugin: Plugin): void {
         ),
     );
 }
-
-// Lucide's split arrow, which Obsidian has.
-const SPLIT_ICON = 'split';
 
 /**
  * The lines the task on {@link line} splits into, or null if it is not a task or can't be split.

@@ -3,6 +3,9 @@ import { splitDescription, splitTask } from '../../Task/SplitTask';
 import { MenuDividerInstruction } from './MenuDividerInstruction';
 import type { TaskEditingInstruction } from './TaskEditingInstruction';
 
+// Lucide's split arrow, which Obsidian has.
+export const SPLIT_ICON = 'split';
+
 /**
  * t7 fork feature: an instruction for splitting a {@link Task} at its `//` separators.
  * Spec: `fork-features/split-tasks.md`.
@@ -19,6 +22,10 @@ export class SplitTaskInstruction implements TaskEditingInstruction {
 
     public isCheckedForTask(_task: Task): boolean {
         return false;
+    }
+
+    public instructionIcon(): string {
+        return SPLIT_ICON;
     }
 }
 

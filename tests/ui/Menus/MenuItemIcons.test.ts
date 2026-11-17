@@ -29,4 +29,10 @@ describe('menu item icons', () => {
         // Upstream's priority items have none.
         expect(Object.values(icons).filter((icon) => icon === '').length).toBeGreaterThan(0);
     });
+
+    it('should show the split icon on Split task', () => {
+        const menu = new NailMenu(fromLine({ line: '- [ ] fix // test' }));
+
+        expect(iconsByTitle(menu)['Split task']).toEqual('split');
+    });
 });

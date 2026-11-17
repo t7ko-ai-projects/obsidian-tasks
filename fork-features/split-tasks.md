@@ -54,6 +54,7 @@ becomes
 - Nails (⚠️ at the start of the description) and a horizon (🔭) at the end of the description go to every new task. So does the title before 🪜, tags included. Without 🪜, tags right at the start of the description (after any nails) stay at the start of every new task: `#home fix sink // fix door` becomes `#home fix sink` and `#home fix door`.
 - If the title before 🪜 already ends with `:`, no second one is added. Without a title (`🪜 a // b`), there is no prefix.
 - With a global filter, a part without it gets it at its start (after any nails), so every new task is still a task.
+- `Split task` has the Lucide `split` icon in both menus.
 
 ## Requirements
 
