@@ -32,6 +32,7 @@ import { recurrenceDeleteOnCompletionExtension } from './Obsidian/RecurrenceDele
 import { registerSplitTaskCommand } from './Commands/SplitTaskCommand';
 import { editorStatusMenuExtension } from './Obsidian/EditorStatusMenuExtension';
 import { registerCompletePermanentlyCommand } from './Commands/CompletePermanentlyCommand';
+import { registerCompleteAllStepsCommand } from './Commands/CompleteAllStepsCommand';
 import { registerJumpAnchorCommands } from './Commands/JumpAnchorCommands';
 
 export default class TasksPlugin extends Plugin {
@@ -105,6 +106,8 @@ export default class TasksPlugin extends Plugin {
         this.registerEditorExtension(editorStatusMenuExtension());
         // t7: complete permanently
         registerCompletePermanentlyCommand(this);
+        // t7: complete all steps of a multi-step task
+        registerCompleteAllStepsCommand(this);
         // t7: jump anchor
         registerJumpAnchorCommands(this);
 

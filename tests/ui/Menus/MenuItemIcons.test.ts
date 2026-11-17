@@ -44,4 +44,17 @@ describe('menu item icons', () => {
         expect(iconsByTitle(new NailMenu(task))['Complete permanently']).toEqual('check-check');
         expect(iconsByTitle(new StatusMenu(new StatusRegistry(), task))['Complete permanently']).toEqual('check-check');
     });
+
+    it('should show an icon on Complete all steps, but not on the statuses', () => {
+        const task = fromLine({ line: '- [ ] Renew 🪜 form // photo' });
+
+        expect(iconsByTitle(new NailMenu(task))['Complete all steps']).toEqual('tasks-t7-complete-all-steps');
+        expect(iconsByTitle(new StatusMenu(new StatusRegistry(), task))).toEqual({
+            'Change status to: [ ] Todo': '',
+            'Change status to: [x] Done': '',
+            'Change status to: [/] In Progress': '',
+            'Change status to: [-] Cancelled': '',
+            'Complete all steps': 'tasks-t7-complete-all-steps',
+        });
+    });
 });

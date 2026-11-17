@@ -2,6 +2,7 @@ import type { Task } from '../../Task/Task';
 import { nailInstructions, nailInstructionsAfterSeparator } from '../EditInstructions/NailInstructions';
 import { splitTaskInstructionsAfterSeparator } from '../EditInstructions/SplitTaskInstruction';
 import { completePermanentlyInstructionsAfterSeparator } from '../EditInstructions/CompletePermanentlyInstruction';
+import { completeAllStepsInstructionsAfterSeparator } from '../EditInstructions/CompleteAllStepsInstruction';
 import { jumpToTask, jumpToTaskAvailable } from '../../Obsidian/JumpToTask';
 import { PriorityMenu } from './PriorityMenu';
 import { TaskEditingMenu, type TaskSaver, defaultTaskSaver } from './TaskEditingMenu';
@@ -13,7 +14,8 @@ import { TaskEditingMenu, type TaskSaver, defaultTaskSaver } from './TaskEditing
  * split (t7 fork feature: split tasks, spec: `fork-features/split-tasks.md`), and with `Complete permanently` when
  * it recurs (t7 fork feature: complete permanently, spec: `fork-features/complete-permanently.md`). It starts with
  * `Jump to`, which opens the task's note at its line (t7 fork feature: jump to task, spec:
- * `fork-features/jump-to-task.md`).
+ * `fork-features/jump-to-task.md`). It ends with `Complete all steps` for an open task with two or more open steps
+ * (t7 fork feature: multi-step tasks, spec: `fork-features/multi-step-tasks.md`).
  */
 export class NailMenu extends TaskEditingMenu {
     /**
@@ -31,6 +33,7 @@ export class NailMenu extends TaskEditingMenu {
         this.addItemsForInstructions(nailInstructions(task), task);
         this.addItemsForInstructions(splitTaskInstructionsAfterSeparator(task), task);
         this.addItemsForInstructions(completePermanentlyInstructionsAfterSeparator(task), task);
+        this.addItemsForInstructions(completeAllStepsInstructionsAfterSeparator(task), task);
     }
 }
 

@@ -136,7 +136,8 @@ describe('Split task in the rendered task menu', () => {
     it('should end the menu and save the new tasks', async () => {
         const task = fromLine({ line: '- [ ] Renew 🪜 a // b' });
         const menu = new NailMenu(task, TestableTaskSaver.testableTaskSaver);
-        expect(menuToString(menu)).toEqual('\n  Add nail\n  ---\n  Split task');
+        // t7: multi-step tasks add Complete all steps after it.
+        expect(menuToString(menu)).toEqual('\n  Add nail\n  ---\n  Split task\n  ---\n  Complete all steps');
 
         // @ts-expect-error TS2339: Property 'items' does not exist on type 'NailMenu'.
         const item = menu.items.find((i: { title: string }) => i.title === 'Split task');
