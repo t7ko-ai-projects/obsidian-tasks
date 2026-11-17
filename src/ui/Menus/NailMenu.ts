@@ -7,6 +7,9 @@ import { jumpToTask, jumpToTaskAvailable } from '../../Obsidian/JumpToTask';
 import { PriorityMenu } from './PriorityMenu';
 import { TaskEditingMenu, type TaskSaver, defaultTaskSaver } from './TaskEditingMenu';
 
+// Lucide's left-to-right arrow, which Obsidian has.
+const JUMP_TO_ICON = 'arrow-right';
+
 /**
  * t7 fork feature: a Menu for adding or removing a Task's nails. Spec: `fork-features/nails.md`.
  *
@@ -27,7 +30,12 @@ export class NailMenu extends TaskEditingMenu {
         super(taskSaver);
 
         if (jumpToTaskAvailable()) {
-            this.addItem((item) => item.setTitle('Jump to').onClick(() => jumpToTask(task)));
+            this.addItem((item) =>
+                item
+                    .setTitle('Jump to')
+                    .setIcon(JUMP_TO_ICON)
+                    .onClick(() => jumpToTask(task)),
+            );
             this.addSeparator();
         }
         this.addItemsForInstructions(nailInstructions(task), task);

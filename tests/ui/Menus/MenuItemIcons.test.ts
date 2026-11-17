@@ -1,5 +1,7 @@
 import moment from 'moment';
+import type { App } from 'obsidian';
 import type { MenuItem } from '../../__mocks__/obsidian';
+import { registerJumpToTask } from '../../../src/Obsidian/JumpToTask';
 import { StatusRegistry } from '../../../src/Statuses/StatusRegistry';
 import { NailMenu, PriorityMenuWithNails } from '../../../src/ui/Menus/NailMenu';
 import { StatusMenu } from '../../../src/ui/Menus/StatusMenu';
@@ -56,5 +58,14 @@ describe('menu item icons', () => {
             'Change status to: [-] Cancelled': '',
             'Complete all steps': 'tasks-t7-complete-all-steps',
         });
+    });
+
+    it('should show an arrow on Jump to', () => {
+        registerJumpToTask({} as App);
+        try {
+            expect(iconsByTitle(new NailMenu(fromLine({ line: '- [ ] fix' })))['Jump to']).toEqual('arrow-right');
+        } finally {
+            registerJumpToTask(undefined);
+        }
     });
 });

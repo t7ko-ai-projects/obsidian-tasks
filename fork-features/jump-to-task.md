@@ -10,6 +10,7 @@
 - A task whose note has no known path (a task in a canvas card, say) has no menu at all, as before.
 - If the task is no longer where Tasks found it (the note changed), a notice says so and nothing opens.
 - There is no setting.
+- `Jump to` has a left-to-right arrow icon (Lucide `arrow-right`).
 
 ## Requirements
 
