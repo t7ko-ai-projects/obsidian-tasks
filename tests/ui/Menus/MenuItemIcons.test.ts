@@ -1,6 +1,8 @@
 import moment from 'moment';
 import type { MenuItem } from '../../__mocks__/obsidian';
+import { StatusRegistry } from '../../../src/Statuses/StatusRegistry';
 import { NailMenu, PriorityMenuWithNails } from '../../../src/ui/Menus/NailMenu';
+import { StatusMenu } from '../../../src/ui/Menus/StatusMenu';
 import { fromLine } from '../../TestingTools/TestHelpers';
 
 window.moment = moment;
@@ -34,5 +36,12 @@ describe('menu item icons', () => {
         const menu = new NailMenu(fromLine({ line: '- [ ] fix // test' }));
 
         expect(iconsByTitle(menu)['Split task']).toEqual('split');
+    });
+
+    it('should show the double check mark on Complete permanently', () => {
+        const task = fromLine({ line: '- [ ] water 🔁 every day 📅 2026-11-16' });
+
+        expect(iconsByTitle(new NailMenu(task))['Complete permanently']).toEqual('check-check');
+        expect(iconsByTitle(new StatusMenu(new StatusRegistry(), task))['Complete permanently']).toEqual('check-check');
     });
 });

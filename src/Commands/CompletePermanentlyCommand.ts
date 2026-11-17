@@ -3,6 +3,7 @@ import { TasksFile } from '../Scripting/TasksFile';
 import { completePermanently } from '../Task/CompletePermanently';
 import { Task } from '../Task/Task';
 import { TaskLocation } from '../Task/TaskLocation';
+import { COMPLETE_PERMANENTLY_ICON } from '../ui/EditInstructions/CompletePermanentlyInstruction';
 
 /**
  * t7 fork feature: complete permanently. Spec: `fork-features/complete-permanently.md`.
@@ -32,9 +33,6 @@ export function registerCompletePermanentlyCommand(plugin: Plugin): void {
         ),
     );
 }
-
-// Lucide's double check mark, which Obsidian has.
-const COMPLETE_PERMANENTLY_ICON = 'check-check';
 
 /**
  * The line of the task on {@link line} completed permanently, or null if it is not a task or can't be.

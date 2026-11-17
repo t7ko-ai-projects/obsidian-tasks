@@ -19,6 +19,7 @@ becomes, after `Complete permanently`,
 - The task is marked done, with a done date of today if the Tasks setting for done dates is on. No next occurrence is created, and the done line stays, whatever its on completion says (`🏁 delete` included).
 - Nothing else on the line changes: the recurrence rule, `🏁 delete`, dates, priority, id, block link and nested lines stay as they were.
 - In the editor it is one edit: Undo (Ctrl+Z) brings the open task back.
+- `Complete permanently` has the double check mark icon (Lucide `check-check`) in all three menus.
 
 ## Requirements
 

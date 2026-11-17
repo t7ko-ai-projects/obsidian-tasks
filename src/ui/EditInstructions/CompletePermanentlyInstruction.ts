@@ -3,6 +3,9 @@ import { canCompletePermanently, completePermanently } from '../../Task/Complete
 import { MenuDividerInstruction } from './MenuDividerInstruction';
 import type { TaskEditingInstruction } from './TaskEditingInstruction';
 
+// Lucide's double check mark, which Obsidian has.
+export const COMPLETE_PERMANENTLY_ICON = 'check-check';
+
 /**
  * t7 fork feature: an instruction for completing a recurring {@link Task} without a next occurrence.
  * Spec: `fork-features/complete-permanently.md`.
@@ -20,6 +23,10 @@ export class CompletePermanentlyInstruction implements TaskEditingInstruction {
 
     public isCheckedForTask(_task: Task): boolean {
         return false;
+    }
+
+    public instructionIcon(): string {
+        return COMPLETE_PERMANENTLY_ICON;
     }
 }
 
