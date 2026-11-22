@@ -137,8 +137,12 @@ export function stepSegments(text: string): StepSegment[] {
     return segments;
 }
 
+// A bare URL at the end of a step. Obsidian's autolinking takes a `~~` right after it into the link, so
+// `~~see https://x.com~~` would never close; `<https://x.com>` is a link that ends at its `>`.
+const TRAILING_BARE_URL = /(^|\s)(https?:\/\/\S+)$/;
+
 function strike(description: string, step: Step) {
-    const text = description.slice(step.start, step.end);
+    const text = description.slice(step.start, step.end).replace(TRAILING_BARE_URL, '$1<$2>');
     return description.slice(0, step.start) + STRIKE + text + STRIKE + description.slice(step.end);
 }
 

@@ -61,10 +61,25 @@ describe('MultiStepTask - toggleStep() when toggling into DONE', () => {
 
     it('should only split on // with whitespace on both sides', () => {
         expect(advance('🪜 read https://example.com/a // b')).toEqual({
-            description: '🪜 ~~read https://example.com/a~~ // b',
+            description: '🪜 ~~read <https://example.com/a>~~ // b',
             keepStatus: true,
         });
         expect(advance('🪜 a//b')).toEqual({ description: '🪜 ~~a//b~~', keepStatus: false });
+    });
+
+    it('should put a URL ending a step in angle brackets, so the strikethrough closes', () => {
+        expect(advance('🪜 ~~a~~ // https://example.org/docs/page+one // c #tag')).toEqual({
+            description: '🪜 ~~a~~ // ~~<https://example.org/docs/page+one>~~ // c #tag',
+            keepStatus: true,
+        });
+        expect(advance('🪜 see https://example.com // c')).toEqual({
+            description: '🪜 ~~see <https://example.com>~~ // c',
+            keepStatus: true,
+        });
+        expect(advance('🪜 <https://example.com> // c')).toEqual({
+            description: '🪜 ~~<https://example.com>~~ // c',
+            keepStatus: true,
+        });
     });
 
     it('should skip empty steps', () => {
